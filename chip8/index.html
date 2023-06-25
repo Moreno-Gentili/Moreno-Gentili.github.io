@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>CHIP-8 emulator on Blazor WebAssembly</title>
+    <base href="/" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <meta property="og:title" content="CHIP-8 emulator on Blazor WebAssembly" />
+    <meta property="og:image" content="/images/preview.gif" />
+</head>
+
+<body>
+    <div id="app">
+        <svg id="loader-bars" viewBox="-0.5 -0.5 1 1" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+            <line id="line" x1="0" y1="-10" x2="0" y2="10" stroke="rgba(255, 255, 255, 0.3)" stroke-width="100" />
+        </svg>
+        <script>
+            let lineInterval;
+            lineInterval = setInterval(function () {
+                let lineInterval;
+                const line = document.getElementById('line');
+                if (!line) {
+                    clearInterval(lineInterval);
+                    return;
+                }
+
+                let dashes = [];
+                for (i = 0; i < 100; i++) {
+                    dashes.push((Math.random() * 0.04) + 0.01);
+                }
+
+                line.style.strokeDasharray = dashes.join(' ');
+            }, 40);
+        </script>
+        <div id="loader">
+            <div class="nes-text">PLEASE WAIT</div>
+            <progress id="progressbar" class="nes-progress is-pattern is-dark" value="0" max="100" hidden></progress>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.153.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.153.0/examples/jsm/"
+          }
+        }
+    </script>
+    <script type="module" src="scripts/crt.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script src="scripts/global-functions.js"></script>
+    <script>
+        startBlazor();
+    </script>
+</body>
+</html>
